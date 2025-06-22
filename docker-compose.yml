@@ -12,6 +12,17 @@ services:
       - "5432:5432"
     networks:
       - backend
+  test-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: miniapi
+    ports:
+      - "5435:5432"
+    networks:
+      - backend
 
   api:
     build: .

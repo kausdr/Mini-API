@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: miniapi
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+  api:
+    build: .
+    container_name: nestjs_api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://user:123@db:5432/miniapi
+    networks:
+      - backend
+
+networks:
+  backend:
